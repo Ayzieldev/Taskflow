@@ -5,7 +5,7 @@ import TaskBlockComponent from '../components/design/TaskBlock/TaskBlock';
 import TaskForm from '../components/design/TaskForm/TaskForm';
 import LoadingSpinner from '@/components/design/LoadingSpinner/LoadingSpinner';
 import ErrorMessage from '@/components/design/ErrorMessage/ErrorMessage';
-import { useGoal, useUpdateGoal, useAddTaskBlock, useUpdateTaskBlock, useDeleteTaskBlock, useAddSubtask, useUpdateSubtask, useDeleteSubtask, useUpdateGoalProgress } from '@/hooks/useGoals';
+import { useGoal, useAddTaskBlock, useUpdateTaskBlock, useDeleteTaskBlock, useUpdateSubtask, useDeleteSubtask, useUpdateGoalProgress } from '@/hooks/useGoals';
 import { TaskBlock, Subtask } from '@/types';
 import ConfirmDialog from '@/components/design/ConfirmDialog/ConfirmDialog';
 
