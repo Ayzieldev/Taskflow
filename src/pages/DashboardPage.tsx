@@ -98,14 +98,7 @@ const GoalCard: React.FC<{
   );
 };
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'high': return 'priority-high';
-      case 'medium': return 'priority-medium';
-      case 'low': return 'priority-low';
-      default: return 'priority-medium';
-    }
-  };
+
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -168,7 +161,7 @@ const DashboardPage: React.FC = () => {
     if (tabFromUrl && tabFromUrl !== activeTab) {
       setActiveTab(tabFromUrl);
     }
-  }, [searchParams]);
+  }, [searchParams, activeTab]);
 
   const getTotalProgress = () => {
     if (goals.length === 0) return 0;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@/context/ThemeContext';
 import { useMobile } from '@/hooks/useMobile';
@@ -7,7 +7,7 @@ import './Header.scss';
 
 const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
-  const { isMobile, showInstallPrompt, installApp, isInstalled } = useMobile();
+  const { isMobile, isInstalled } = useMobile();
   const [showDownloadModal, setShowDownloadModal] = useState(false);
 
   const handleDownload = () => {

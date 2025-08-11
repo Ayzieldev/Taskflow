@@ -6,7 +6,7 @@ import TaskForm from '../components/design/TaskForm/TaskForm';
 import LoadingSpinner from '@/components/design/LoadingSpinner/LoadingSpinner';
 import ErrorMessage from '@/components/design/ErrorMessage/ErrorMessage';
 import { useGoal, useUpdateGoal, useAddTaskBlock, useUpdateTaskBlock, useDeleteTaskBlock, useAddSubtask, useUpdateSubtask, useDeleteSubtask, useUpdateGoalProgress } from '@/hooks/useGoals';
-import { Goal, TaskBlock, Subtask } from '@/types';
+import { TaskBlock, Subtask } from '@/types';
 import ConfirmDialog from '@/components/design/ConfirmDialog/ConfirmDialog';
 
 interface TaskFormData {
@@ -25,11 +25,9 @@ const GoalDetailPage: React.FC = () => {
 
   // React Query hooks
   const { data: goal, isLoading, error } = useGoal(id!);
-  const updateGoalMutation = useUpdateGoal();
   const addTaskBlockMutation = useAddTaskBlock();
   const updateTaskBlockMutation = useUpdateTaskBlock();
   const deleteTaskBlockMutation = useDeleteTaskBlock();
-  const addSubtaskMutation = useAddSubtask();
   const updateSubtaskMutation = useUpdateSubtask();
   const deleteSubtaskMutation = useDeleteSubtask();
   const updateGoalProgressMutation = useUpdateGoalProgress();

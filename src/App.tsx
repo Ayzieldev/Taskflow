@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { QueryClientProviderWrapper } from '@/context/QueryClient';
 import { RewardProvider, useReward } from '@/context/RewardContext';
-import { useElectron, isElectronApp } from '@/hooks/useElectron';
+import { isElectronApp } from '@/hooks/useElectron';
 import './styles/main.scss';
 
 // Components

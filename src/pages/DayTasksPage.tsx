@@ -103,7 +103,6 @@ const DayTasksPage: React.FC = () => {
 
   const dayTasks = (weeklyTasks || []).filter(task => task.dayOfWeek === day);
   const completedTasks = dayTasks.filter(task => task.completed);
-  const pendingTasks = dayTasks.filter(task => !task.completed);
   const completionRate = dayTasks.length > 0 ? Math.round((completedTasks.length / dayTasks.length) * 100) : 0;
 
   return (
