@@ -1,0 +1,225 @@
+@use '@/styles/abstracts/variables' as *;
+@use '@/styles/abstracts/mixins' as *;
+
+.reward-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  @include flex-center;
+  z-index: $z-modal;
+  pointer-events: none;
+  
+  &__content {
+    background: var(--gradient-primary);
+    color: var(--color-text);
+    padding: $spacing-xl $spacing-2xl;
+    border-radius: $border-radius-xl;
+    box-shadow: $shadow-2xl;
+    text-align: center;
+    @include fade-in;
+    @include bounce;
+    position: relative;
+    overflow: hidden;
+    min-width: 300px;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+      animation: goldenGlow 2s ease-in-out infinite;
+      pointer-events: none;
+    }
+  }
+  
+  &__message {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-md;
+    color: var(--color-text);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  &__icon {
+    font-size: $font-size-4xl;
+    margin-bottom: $spacing-lg;
+    @include pulse;
+    animation: rewardPulse 1.5s ease-in-out infinite;
+  }
+  
+  &__golden-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+    animation: goldenPulse 2s ease-in-out infinite;
+    pointer-events: none;
+  }
+  
+  &__confetti {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    animation: confettiFall 3s ease-out forwards;
+    pointer-events: none;
+    
+    &:nth-child(odd) {
+      animation-duration: 2.5s;
+      animation-delay: 0.2s;
+    }
+    
+    &:nth-child(3n) {
+      animation-duration: 3.5s;
+      animation-delay: 0.4s;
+    }
+    
+    &:nth-child(4n) {
+      width: 8px;
+      height: 8px;
+      animation-duration: 2s;
+    }
+    
+    &:nth-child(5n) {
+      width: 16px;
+      height: 16px;
+      animation-duration: 4s;
+    }
+  }
+}
+
+// Enhanced animations
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes rewardPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes goldenGlow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes goldenPulse {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+// Special effects for different reward types
+.reward-animation--goal {
+  .reward-animation__content {
+    background: linear-gradient(135deg, #ffd700, #ffed4e, #ffd700);
+    color: #2c1810;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700, #ffed4e);
+      border-radius: $border-radius-xl;
+      z-index: -1;
+      animation: borderGlow 2s ease-in-out infinite;
+    }
+  }
+  
+  .reward-animation__icon {
+    animation: goalCelebration 1s ease-in-out infinite;
+  }
+}
+
+.reward-animation--streak {
+  .reward-animation__content {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e8e, #ff6b6b);
+    color: white;
+  }
+  
+  .reward-animation__icon {
+    animation: fireBurn 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes goalCelebration {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.1) rotate(-5deg);
+  }
+  75% {
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+
+@keyframes fireBurn {
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.15);
+    filter: brightness(1.2);
+  }
+}
+
+// Responsive design
+@include mobile {
+  .reward-animation__content {
+    margin: $spacing-lg;
+    padding: $spacing-lg $spacing-xl;
+    min-width: 250px;
+  }
+  
+  .reward-animation__message {
+    font-size: $font-size-lg;
+  }
+  
+  .reward-animation__icon {
+    font-size: $font-size-3xl;
+  }
+}

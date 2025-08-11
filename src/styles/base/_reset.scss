@@ -1,0 +1,341 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// CSS Reset and Base Styles
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: $font-family-primary;
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--gradient-background);
+  background-attachment: fixed;
+  transition: all $transition-normal;
+  
+  // Global transitions for theme switching
+  * {
+    transition: 
+      background-color $transition-normal,
+      background $transition-normal,
+      color $transition-normal,
+      border-color $transition-normal,
+      box-shadow $transition-normal,
+      opacity $transition-normal,
+      transform $transition-normal;
+  }
+  
+  // Specific elements that need different transition timing
+  .header,
+  .goal-card,
+  .btn,
+  .modal,
+  .input {
+    transition: 
+      background-color $transition-normal,
+      background $transition-normal,
+      color $transition-normal,
+      border-color $transition-normal,
+      box-shadow $transition-normal,
+      opacity $transition-normal,
+      transform $transition-normal;
+  }
+  
+  // Enhanced transitions during theme switching
+  &.theme-transitioning {
+    * {
+      transition: 
+        background-color 0.3s ease,
+        background 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        opacity 0.3s ease,
+        transform 0.3s ease;
+    }
+    
+    .header,
+    .goal-card,
+    .btn,
+    .modal,
+    .input {
+      transition: 
+        background-color 0.3s ease,
+        background 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        opacity 0.3s ease,
+        transform 0.3s ease;
+    }
+  }
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 $spacing-md 0;
+  font-weight: $font-weight-semibold;
+  line-height: 1.2;
+  color: var(--color-text);
+}
+
+h1 {
+  font-size: $font-size-4xl;
+  font-weight: $font-weight-bold;
+}
+
+h2 {
+  font-size: $font-size-3xl;
+}
+
+h3 {
+  font-size: $font-size-2xl;
+}
+
+h4 {
+  font-size: $font-size-xl;
+}
+
+h5 {
+  font-size: $font-size-lg;
+}
+
+h6 {
+  font-size: $font-size-base;
+}
+
+p {
+  margin: 0 0 $spacing-md 0;
+  color: var(--color-text);
+}
+
+// Links
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color $transition-fast;
+  
+  &:hover {
+    color: var(--color-accent);
+  }
+  
+  &:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+// Lists
+ul, ol {
+  margin: 0 0 $spacing-md 0;
+  padding-left: $spacing-lg;
+  list-style: none;
+}
+
+li {
+  margin-bottom: $spacing-xs;
+}
+
+// Images
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// Forms
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+
+button,
+input {
+  overflow: visible;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+// Remove default button styles
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  
+  &:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+// Tables
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+th,
+td {
+  padding: $spacing-sm;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+th {
+  font-weight: $font-weight-semibold;
+  color: var(--color-text);
+}
+
+// Code
+code,
+pre {
+  font-family: $font-family-monospace;
+  font-size: $font-size-sm;
+  background-color: var(--color-surface);
+  border-radius: $border-radius-sm;
+  padding: $spacing-xs $spacing-sm;
+}
+
+pre {
+  overflow-x: auto;
+  padding: $spacing-md;
+  margin: $spacing-md 0;
+  border-radius: $border-radius-md;
+}
+
+// Blockquotes
+blockquote {
+  margin: $spacing-lg 0;
+  padding: $spacing-md;
+  border-left: 4px solid var(--color-primary);
+  background-color: var(--color-surface);
+  border-radius: $border-radius-sm;
+  
+  p {
+    margin: 0;
+    font-style: italic;
+  }
+}
+
+// Horizontal Rule
+hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: $spacing-xl 0;
+}
+
+// Focus styles for accessibility
+*:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+// Skip to content link for accessibility
+.skip-link {
+  @include sr-only;
+  
+  &:focus {
+    position: fixed;
+    top: $spacing-md;
+    left: $spacing-md;
+    z-index: $z-tooltip;
+    background: var(--color-primary);
+    color: var(--color-text);
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-md;
+    text-decoration: none;
+  }
+}
+
+// Utility classes
+.sr-only {
+  @include sr-only;
+}
+
+.visually-hidden {
+  @include sr-only;
+}
+
+// Print styles
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+  
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+  
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+  
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+  
+  thead {
+    display: table-header-group;
+  }
+  
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+  
+  img {
+    max-width: 100% !important;
+  }
+  
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+} 

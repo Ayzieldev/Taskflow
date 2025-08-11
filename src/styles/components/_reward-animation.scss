@@ -1,0 +1,64 @@
+@use '@/styles/abstracts/variables' as *;
+@use '@/styles/abstracts/mixins' as *;
+
+.reward-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  @include flex-center;
+  z-index: $z-modal;
+  pointer-events: none;
+  
+  &__content {
+    background: var(--gradient-primary);
+    color: var(--color-text);
+    padding: $spacing-lg $spacing-xl;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-xl;
+    text-align: center;
+    @include fade-in;
+    @include bounce;
+  }
+  
+  &__message {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-sm;
+  }
+  
+  &__icon {
+    font-size: $font-size-3xl;
+    margin-bottom: $spacing-md;
+    @include pulse;
+  }
+  
+  &__confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    animation: confettiFall 3s ease-out forwards;
+    
+    &:nth-child(odd) {
+      background: var(--color-secondary);
+    }
+    
+    &:nth-child(3n) {
+      background: var(--color-accent);
+    }
+  }
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+} 

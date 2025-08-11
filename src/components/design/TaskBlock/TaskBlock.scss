@@ -1,0 +1,488 @@
+@use '@/styles/abstracts/variables' as *;
+@use '@/styles/abstracts/mixins' as *;
+
+.task-block {
+  @include card-base;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  border: 2px solid var(--color-border);
+  transition: all $transition-normal;
+  
+  &:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  &--completed {
+    background-color: var(--color-success-light);
+    border-color: var(--color-success);
+    animation: completedPulse 0.6s ease-out;
+    
+    .task-block__title {
+      text-decoration: line-through;
+      color: var(--color-text-muted);
+    }
+    
+    .task-block__checkmark {
+      animation: checkmarkPop 0.3s ease-out;
+    }
+  }
+  
+  &--locked {
+    opacity: 0.6;
+    background-color: var(--color-surface);
+    border-color: var(--color-border);
+    
+    .task-block__checkbox {
+      cursor: not-allowed;
+    }
+  }
+  
+  &__header {
+    @include flex-between;
+    align-items: flex-start;
+    gap: $spacing-md;
+  }
+  
+  &__main {
+    @include flex-start;
+    gap: $spacing-md;
+    flex: 1;
+  }
+  
+  &__checkbox-container {
+    @include flex-center;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    min-width: 24px;
+    height: 24px;
+  }
+  
+  &__checkbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+    
+    &:checked ~ .task-block__checkmark {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+      
+      &:after {
+        display: block;
+      }
+    }
+    
+    &:disabled ~ .task-block__checkmark {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+  
+  &__checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 24px;
+    width: 24px;
+    background-color: transparent;
+    border: 2px solid var(--color-border);
+    border-radius: $border-radius-sm;
+    transition: all $transition-fast;
+    
+    &:after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 8px;
+      top: 4px;
+      width: 6px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  }
+  
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  &__title-section {
+    @include flex-between;
+    align-items: flex-start;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-sm;
+  }
+  
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: var(--color-text);
+    margin: 0;
+    line-height: 1.3;
+    word-break: break-word;
+  }
+  
+  &__subtask-count {
+    font-size: $font-size-sm;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  
+  &__progress {
+    @include flex-between;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-top: $spacing-sm;
+  }
+  
+  &__progress-bar {
+    flex: 1;
+    height: 6px;
+    background-color: var(--color-border);
+    border-radius: $border-radius-sm;
+    overflow: hidden;
+  }
+  
+  &__progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    border-radius: $border-radius-sm;
+    transition: width $transition-normal;
+  }
+  
+  &__progress-text {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--color-text-muted);
+    min-width: 40px;
+    text-align: right;
+  }
+  
+  &__actions {
+    @include flex-center;
+    gap: $spacing-xs;
+    flex-shrink: 0;
+  }
+  
+  &__expand-btn,
+  &__edit-btn,
+  &__delete-btn {
+    @include button-reset;
+    @include flex-center;
+    width: 32px;
+    height: 32px;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-lg;
+    transition: all $transition-fast;
+    
+    &:hover {
+      background-color: var(--color-surface);
+      transform: scale(1.1);
+    }
+  }
+  
+  &__expand-btn {
+    font-weight: $font-weight-bold;
+    color: var(--color-primary);
+  }
+  
+  &__edit-btn {
+    color: var(--color-text-muted);
+  }
+  
+  &__delete-btn {
+    color: var(--color-danger);
+    
+    &:hover {
+      background-color: var(--color-danger-light);
+    }
+  }
+  
+  &__edit-input,
+  &__subtask-edit-input {
+    width: 100%;
+    padding: $spacing-sm;
+    border: 2px solid var(--color-primary);
+    border-radius: $border-radius-sm;
+    font-size: inherit;
+    font-family: inherit;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    
+    &:focus {
+      outline: none;
+      border-color: var(--color-secondary);
+      box-shadow: 0 0 0 3px rgba(176, 102, 255, 0.1);
+    }
+  }
+  
+  &__subtasks {
+    margin-top: $spacing-lg;
+    padding-top: $spacing-lg;
+    border-top: 1px solid var(--color-border);
+  }
+  
+  &__empty-subtasks {
+    text-align: center;
+    padding: $spacing-lg;
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+  
+  &__subtask {
+    @include flex-between;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm;
+    margin-bottom: $spacing-sm;
+    border-radius: $border-radius-sm;
+    background-color: var(--color-surface);
+    transition: all $transition-fast;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    &:hover {
+      background-color: var(--color-surface-hover);
+    }
+    
+    &--completed {
+      opacity: 0.7;
+      animation: completedPulse 0.6s ease-out;
+      
+      .task-block__subtask-title {
+        text-decoration: line-through;
+        color: var(--color-text-muted);
+      }
+      
+      .task-block__subtask-checkmark {
+        animation: checkmarkPop 0.3s ease-out;
+      }
+    }
+    
+    &--locked {
+      opacity: 0.5;
+      background-color: var(--color-surface);
+      
+      .task-block__subtask-checkbox {
+        cursor: not-allowed;
+      }
+    }
+  }
+  
+  &__subtask-checkbox-container {
+    @include flex-center;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    min-width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+  
+  &__subtask-checkbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+    
+    &:checked ~ .task-block__subtask-checkmark {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+      
+      &:after {
+        display: block;
+      }
+    }
+    
+    &:disabled ~ .task-block__subtask-checkmark {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+  
+  &__subtask-checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: transparent;
+    border: 2px solid var(--color-border);
+    border-radius: $border-radius-sm;
+    transition: all $transition-fast;
+    
+    &:after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 6px;
+      top: 3px;
+      width: 5px;
+      height: 8px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  }
+  
+  &__subtask-content {
+    @include flex-start;
+    gap: $spacing-sm;
+    flex: 1;
+    min-width: 0;
+  }
+  
+  &__subtask-title {
+    font-size: $font-size-base;
+    color: var(--color-text);
+    word-break: break-word;
+    flex: 1;
+  }
+  
+  &__locked-indicator {
+    font-size: $font-size-sm;
+    flex-shrink: 0;
+  }
+  
+  &__subtask-actions {
+    @include flex-center;
+    gap: $spacing-xs;
+    flex-shrink: 0;
+  }
+  
+  &__subtask-edit-btn,
+  &__subtask-delete-btn {
+    @include button-reset;
+    @include flex-center;
+    width: 28px;
+    height: 28px;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-sm;
+    transition: all $transition-fast;
+    
+    &:hover {
+      background-color: var(--color-surface);
+      transform: scale(1.1);
+    }
+  }
+  
+  &__subtask-edit-btn {
+    color: var(--color-text-muted);
+  }
+  
+  &__subtask-delete-btn {
+    color: var(--color-danger);
+    
+    &:hover {
+      background-color: var(--color-danger-light);
+    }
+  }
+  
+  &__reward {
+    @include flex-start;
+    gap: $spacing-sm;
+    margin-top: $spacing-md;
+    padding: $spacing-sm;
+    background-color: var(--color-success-light);
+    border-radius: $border-radius-sm;
+    border-left: 4px solid var(--color-success);
+  }
+  
+  &__reward-icon {
+    font-size: $font-size-lg;
+    flex-shrink: 0;
+  }
+  
+  &__reward-note {
+    font-size: $font-size-sm;
+    color: var(--color-text);
+    font-style: italic;
+  }
+}
+
+// Responsive design
+@media (max-width: $breakpoint-md) {
+  .task-block {
+    padding: $spacing-md;
+    
+    &__header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: $spacing-sm;
+    }
+    
+    &__main {
+      gap: $spacing-sm;
+    }
+    
+    &__actions {
+      justify-content: flex-end;
+    }
+    
+    &__title-section {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-xs;
+    }
+    
+    &__subtask-count {
+      font-size: $font-size-xs;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .task-block {
+    &__subtask {
+      flex-direction: column;
+      align-items: stretch;
+      gap: $spacing-sm;
+    }
+    
+    &__subtask-content {
+      flex-direction: column;
+      gap: $spacing-xs;
+    }
+    
+    &__subtask-actions {
+      justify-content: flex-end;
+    }
+  }
+}
+
+// Animations for task completion
+@keyframes completedPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  }
+}
+
+@keyframes checkmarkPop {
+  0% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

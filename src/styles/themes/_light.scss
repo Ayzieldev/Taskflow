@@ -1,0 +1,55 @@
+@use '../abstracts/variables' as *;
+
+// Light Theme Variables
+:root {
+  // Colors
+  --color-primary: #{$color-primary-light};
+  --color-primary-rgb: 216, 178, 255;
+  --color-secondary: #{$color-secondary-light};
+  --color-secondary-rgb: 178, 102, 255;
+  --color-accent: #{$color-accent-light};
+  --color-accent-rgb: 69, 0, 226;
+  --color-dark: #{$color-dark-light};
+  --color-dark-rgb: 49, 0, 162;
+  --color-darkest: #{$color-darkest-light};
+  --color-darkest-rgb: 76, 0, 153;
+  --color-background: #{$color-background-light};
+  --color-surface: #{$color-surface-light};
+  --color-text: #{$color-text-light};
+  --color-text-muted: rgba(33, 37, 41, 0.6);
+  --color-border: rgba(33, 37, 41, 0.1);
+  --color-shadow: rgba(0, 0, 0, 0.1);
+  --color-card-bg: rgba(255, 255, 255, 0.8);
+  
+  // Status Colors
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+  
+  // Interactive States
+  --color-hover: rgba(216, 178, 255, 0.1);
+  --color-active: rgba(216, 178, 255, 0.2);
+  --color-focus: rgba(69, 0, 226, 0.1);
+  
+  // Gradients
+  --gradient-primary: linear-gradient(135deg, #{$color-primary-light} 0%, #{$color-secondary-light} 100%);
+  --gradient-accent: linear-gradient(135deg, #{$color-accent-light} 0%, #{$color-dark-light} 100%);
+  --gradient-background: linear-gradient(135deg, #f8f9ff 0%, #e8f4ff 25%, #f0f8ff 50%, #f8f9ff 75%, #f0f8ff 100%);
+  --gradient-header: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 255, 0.95) 50%, rgba(240, 248, 255, 0.95) 100%);
+  --gradient-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 249, 255, 0.9) 100%);
+  --gradient-card: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 255, 0.95) 100%);
+  --gradient-button: linear-gradient(135deg, #{$color-primary-light} 0%, #{$color-secondary-light} 50%, #{$color-primary-light} 100%);
+  --gradient-text: linear-gradient(135deg, #{$color-primary-light} 0%, #{$color-accent-light} 50%, #{$color-primary-light} 100%);
+  
+  // Shadows
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+  --shadow-xl: #{$shadow-xl};
+  
+  // Transitions
+  --transition-fast: #{$transition-fast};
+  --transition-normal: #{$transition-normal};
+  --transition-slow: #{$transition-slow};
+} 

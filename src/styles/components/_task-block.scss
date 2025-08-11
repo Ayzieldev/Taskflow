@@ -1,0 +1,81 @@
+@use '@/styles/abstracts/variables' as *;
+@use '@/styles/abstracts/mixins' as *;
+
+.task-block {
+  @include card-base;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  
+  &__header {
+    @include flex-between;
+    margin-bottom: $spacing-md;
+  }
+  
+  &__title {
+    font-weight: $font-weight-semibold;
+    color: var(--color-text);
+    margin: 0;
+  }
+  
+  &__status {
+    @include flex-center;
+    gap: $spacing-xs;
+    
+    &--completed {
+      color: var(--color-success);
+    }
+    
+    &--locked {
+      color: var(--color-text-muted);
+      opacity: 0.5;
+    }
+  }
+  
+  &__content {
+    margin-top: $spacing-md;
+  }
+  
+  &__subtasks {
+    margin-top: $spacing-md;
+    padding-left: $spacing-lg;
+  }
+  
+  &__subtask {
+    @include flex-start;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-sm;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  &__checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--color-border);
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+    transition: all $transition-fast;
+    
+    &:checked {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+    
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+  
+  &__subtask-title {
+    flex: 1;
+    font-size: $font-size-sm;
+    
+    &--completed {
+      text-decoration: line-through;
+      color: var(--color-text-muted);
+    }
+  }
+} 

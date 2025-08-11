@@ -1,0 +1,89 @@
+@use '@/styles/abstracts/variables' as *;
+@use '@/styles/abstracts/mixins' as *;
+
+.mobile-install-prompt {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--gradient-surface);
+  border-top: 1px solid var(--color-border);
+  padding: $spacing-lg;
+  z-index: 1000;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.3s ease-out;
+
+  &__content {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  &__icon {
+    font-size: 2rem;
+    margin-bottom: $spacing-md;
+  }
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: var(--color-text);
+    margin: 0 0 $spacing-sm 0;
+  }
+
+  &__description {
+    font-size: $font-size-base;
+    color: var(--color-text-muted);
+    margin: 0 0 $spacing-lg 0;
+    line-height: 1.4;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-sm;
+    justify-content: center;
+  }
+
+  &__btn {
+    padding: $spacing-sm $spacing-lg;
+    border-radius: $border-radius-md;
+    font-weight: $font-weight-medium;
+    border: none;
+    cursor: pointer;
+    transition: all $transition-fast;
+    font-size: $font-size-base;
+
+    &--primary {
+      background: var(--gradient-primary);
+      color: var(--color-text);
+      
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+    }
+
+    &--secondary {
+      background: transparent;
+      color: var(--color-text-muted);
+      border: 1px solid var(--color-border);
+      
+      &:hover {
+        background: var(--color-hover);
+        color: var(--color-text);
+      }
+    }
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

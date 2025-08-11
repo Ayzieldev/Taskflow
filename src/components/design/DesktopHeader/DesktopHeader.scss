@@ -1,0 +1,94 @@
+@use '@/styles/abstracts/variables' as *;
+@use '@/styles/abstracts/mixins' as *;
+
+.desktop-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 32px;
+  background: var(--color-background);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 1000;
+  -webkit-app-region: drag; // Makes the header draggable
+  user-select: none;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    -webkit-app-region: no-drag; // Allows clicking on title
+  }
+
+  &__logo {
+    height: 20px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  &__text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    -webkit-app-region: no-drag; // Allows clicking on controls
+  }
+
+  &__control-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: var(--color-hover);
+      color: var(--color-text-primary);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &--minimize:hover {
+      background: var(--color-warning-light);
+    }
+
+    &--maximize:hover {
+      background: var(--color-success-light);
+    }
+
+    &--close:hover {
+      background: var(--color-danger);
+      color: white;
+    }
+  }
+}
+
+// Adjust main content to account for desktop header
+body.electron {
+  padding-top: 32px;
+  
+  .header {
+    display: none; // Hide web header in desktop app
+  }
+  
+  .container {
+    padding-top: 0;
+  }
+}

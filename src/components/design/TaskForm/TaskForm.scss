@@ -1,0 +1,372 @@
+@use '@/styles/abstracts/variables' as *;
+@use '@/styles/abstracts/mixins' as *;
+
+.task-form {
+  @include card-base;
+  padding: $spacing-xl;
+  max-width: 600px;
+  margin: 0 auto;
+  
+  &__header {
+    @include flex-between;
+    align-items: center;
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-md;
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  &__header h3 {
+    margin: 0;
+    font-size: $font-size-xl;
+    color: var(--color-text);
+  }
+  
+  &__close-btn {
+    @include button-reset;
+    @include flex-center;
+    width: 32px;
+    height: 32px;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-xl;
+    color: var(--color-text-muted);
+    transition: all $transition-fast;
+    
+    &:hover {
+      background-color: var(--color-surface);
+      color: var(--color-text);
+    }
+  }
+  
+  &__content {
+    .form-group {
+      margin-bottom: $spacing-lg;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: $spacing-xs;
+      font-weight: $font-weight-medium;
+      color: var(--color-text);
+    }
+    
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: $spacing-sm;
+      border: 2px solid var(--color-border);
+      border-radius: $border-radius-sm;
+      font-size: $font-size-base;
+      font-family: inherit;
+      background-color: var(--color-background);
+      color: var(--color-text);
+      transition: all $transition-fast;
+      
+      &:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(176, 102, 255, 0.1);
+      }
+      
+      &.error {
+        border-color: var(--color-danger);
+      }
+    }
+    
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    
+    .error-message {
+      display: block;
+      margin-top: $spacing-xs;
+      font-size: $font-size-sm;
+      color: var(--color-danger);
+    }
+    
+    .character-count {
+      display: block;
+      margin-top: $spacing-xs;
+      font-size: $font-size-xs;
+      color: var(--color-text-muted);
+      text-align: right;
+    }
+  }
+  
+  &__subtasks-section {
+    margin-top: $spacing-lg;
+    padding-top: $spacing-lg;
+    border-top: 1px solid var(--color-border);
+  }
+  
+  .subtasks-header {
+    @include flex-between;
+    align-items: center;
+    margin-bottom: $spacing-md;
+    
+    h4 {
+      margin: 0;
+      font-size: $font-size-lg;
+      color: var(--color-text);
+    }
+  }
+  
+  .empty-subtasks {
+    text-align: center;
+    padding: $spacing-lg;
+    color: var(--color-text-muted);
+    font-style: italic;
+    background-color: var(--color-surface);
+    border-radius: $border-radius-sm;
+  }
+  
+  .subtasks-list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+  
+  .subtask-item {
+    @include card-base;
+    padding: $spacing-md;
+    border: 2px solid var(--color-border);
+    border-radius: $border-radius-sm;
+    background-color: var(--color-surface);
+    
+    &:hover {
+      border-color: var(--color-primary);
+    }
+  }
+  
+  .subtask-header {
+    @include flex-between;
+    align-items: center;
+    margin-bottom: $spacing-sm;
+  }
+  
+  .subtask-number {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--color-primary);
+    background-color: var(--color-primary-light);
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-sm;
+  }
+  
+  .subtask-remove-btn {
+    @include button-reset;
+    @include flex-center;
+    width: 24px;
+    height: 24px;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-lg;
+    color: var(--color-danger);
+    transition: all $transition-fast;
+    
+    &:hover {
+      background-color: var(--color-danger-light);
+    }
+  }
+  
+  .subtask-content {
+    .form-group {
+      margin-bottom: $spacing-sm;
+    }
+  }
+  
+  .subtask-options {
+    margin-top: $spacing-sm;
+    padding-top: $spacing-sm;
+    border-top: 1px solid var(--color-border);
+    
+    .checkbox-label {
+      font-size: $font-size-sm;
+      margin-bottom: $spacing-sm;
+    }
+    
+    .form-group {
+      margin-top: $spacing-sm;
+    }
+  }
+  
+  &__step-info {
+    margin-top: $spacing-lg;
+    
+    .info-box {
+      @include flex-start;
+      gap: $spacing-sm;
+      padding: $spacing-md;
+      background-color: var(--color-info-light);
+      border-radius: $border-radius-sm;
+      border-left: 4px solid var(--color-info);
+    }
+    
+    .info-icon {
+      font-size: $font-size-lg;
+      flex-shrink: 0;
+    }
+    
+    p {
+      margin: 0;
+      font-size: $font-size-sm;
+      color: var(--color-text);
+      line-height: 1.4;
+    }
+  }
+  
+  &__actions {
+    @include flex-between;
+    gap: $spacing-md;
+    margin-top: $spacing-xl;
+    padding-top: $spacing-lg;
+    border-top: 1px solid var(--color-border);
+  }
+}
+
+// Checkbox styles
+.checkbox-group {
+  .checkbox-label {
+    @include flex-start;
+    gap: $spacing-sm;
+    cursor: pointer;
+    user-select: none;
+    font-size: $font-size-base;
+    
+    input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+    
+    .checkmark {
+      position: relative;
+      height: 20px;
+      width: 20px;
+      background-color: transparent;
+      border: 2px solid var(--color-border);
+      border-radius: $border-radius-sm;
+      transition: all $transition-fast;
+      
+      &:after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 6px;
+        top: 3px;
+        width: 5px;
+        height: 8px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+    }
+    
+    input[type="checkbox"]:checked ~ .checkmark {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+      
+      &:after {
+        display: block;
+      }
+    }
+    
+    &:hover input[type="checkbox"] ~ .checkmark {
+      border-color: var(--color-primary);
+    }
+  }
+}
+
+// Button styles
+.btn {
+  @include button-reset;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all $transition-fast;
+  border: 2px solid transparent;
+  
+  &--primary {
+    background-color: var(--color-primary);
+    color: white;
+    
+    &:hover {
+      background-color: var(--color-secondary);
+      transform: translateY(-1px);
+    }
+    
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+  
+  &--secondary {
+    background-color: transparent;
+    color: var(--color-text);
+    border-color: var(--color-border);
+    
+    &:hover {
+      background-color: var(--color-surface);
+      border-color: var(--color-primary);
+    }
+  }
+  
+  &--small {
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-sm;
+  }
+}
+
+// Responsive design
+@media (max-width: $breakpoint-md) {
+  .task-form {
+    padding: $spacing-lg;
+    margin: $spacing-md;
+    
+    &__actions {
+      flex-direction: column;
+      gap: $spacing-sm;
+    }
+    
+    .btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .task-form {
+    padding: $spacing-md;
+    margin: $spacing-sm;
+    
+    &__header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: $spacing-sm;
+    }
+    
+    .subtasks-header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: $spacing-sm;
+    }
+    
+    .subtask-item {
+      padding: $spacing-sm;
+    }
+    
+    .subtask-header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: $spacing-xs;
+    }
+  }
+} 

@@ -1,0 +1,42 @@
+@use '@/styles/abstracts/variables' as *;
+@use '@/styles/abstracts/mixins' as *;
+
+.input {
+  @include input-base;
+  
+  &--error {
+    border-color: var(--color-error);
+    
+    &:focus {
+      border-color: var(--color-error);
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+  }
+  
+  &--success {
+    border-color: var(--color-success);
+    
+    &:focus {
+      border-color: var(--color-success);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+  }
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  
+  &__label {
+    font-weight: $font-weight-medium;
+    color: var(--color-text);
+    font-size: $font-size-sm;
+  }
+  
+  &__error {
+    color: var(--color-error);
+    font-size: $font-size-xs;
+    margin-top: $spacing-xs;
+  }
+} 

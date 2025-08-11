@@ -1,0 +1,555 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// ============================================================================
+// SHARED COMPONENTS
+// ============================================================================
+
+// Card Base Styles
+.card {
+  @include card-elevated;
+  padding: $spacing-lg;
+  transition: all $transition-normal;
+  background: var(--gradient-card);
+  border: 1px solid var(--color-border);
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%, 
+                rgba(255, 255, 255, 0.05) 50%, 
+                rgba(255, 255, 255, 0.1) 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    
+    &::after {
+      opacity: 1;
+    }
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient-primary);
+    opacity: 0;
+    transition: opacity $transition-normal;
+    z-index: -1;
+  }
+}
+
+// Goal Card Base
+.goal-card {
+  @extend .card;
+  cursor: pointer;
+  
+  &__header {
+    @include flex-between;
+    margin-bottom: $spacing-md;
+    position: relative;
+    z-index: 1;
+    align-items: flex-start;
+    gap: $spacing-sm;
+  }
+  
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: var(--color-text);
+    margin: 0;
+    @include truncate;
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    flex: 1;
+  }
+  
+  &__priority {
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-full;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--gradient-primary);
+      opacity: 0.1;
+      z-index: -1;
+    }
+    
+    &--low {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%);
+      color: var(--color-success);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    
+    &--medium {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
+      color: var(--color-warning);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    
+    &--high {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.1) 100%);
+      color: var(--color-error);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+  }
+  
+  &__description {
+    color: var(--color-text-muted);
+    margin-bottom: $spacing-md;
+    @include truncate-multiline(2);
+    position: relative;
+    z-index: 1;
+  }
+  
+  &__progress {
+    margin-bottom: $spacing-md;
+    position: relative;
+    z-index: 1;
+  }
+  
+  &__meta {
+    @include flex-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  
+  &__deadline {
+    font-size: $font-size-sm;
+    color: var(--color-text-muted);
+  }
+  
+  &__actions {
+    @include flex-end;
+    gap: $spacing-sm;
+  }
+  
+  &__action-btn {
+    padding: $spacing-xs;
+    border-radius: $border-radius-sm;
+    transition: all $transition-fast;
+    background: var(--gradient-surface);
+    border: 1px solid var(--color-border);
+    
+    &:hover {
+      background: var(--gradient-primary);
+      transform: scale(1.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+// Button Base Styles
+.btn {
+  @include button-base;
+  
+  &--primary {
+    @include button-primary;
+  }
+  
+  &--secondary {
+    @include button-secondary;
+  }
+  
+  &--outline {
+    @include button-outline;
+  }
+  
+  &--ghost {
+    @include button-ghost;
+  }
+  
+  &--sm {
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-sm;
+  }
+  
+  &--lg {
+    padding: $spacing-md $spacing-lg;
+    font-size: $font-size-lg;
+  }
+  
+  &--full {
+    width: 100%;
+  }
+  
+  &--loading {
+    position: relative;
+    color: transparent;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 16px;
+      height: 16px;
+      margin: -8px 0 0 -8px;
+      border: 2px solid transparent;
+      border-top-color: currentColor;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Input Base Styles
+.input {
+  @include input-base;
+  
+  &--error {
+    border-color: var(--color-error);
+    
+    &:focus {
+      border-color: var(--color-error);
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+  }
+  
+  &--success {
+    border-color: var(--color-success);
+    
+    &:focus {
+      border-color: var(--color-success);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+  }
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  
+  &__label {
+    font-weight: $font-weight-medium;
+    color: var(--color-text);
+    font-size: $font-size-sm;
+  }
+  
+  &__error {
+    color: var(--color-error);
+    font-size: $font-size-xs;
+    margin-top: $spacing-xs;
+  }
+}
+
+// Progress Bar Base
+.progress-bar {
+  width: 100%;
+  background-color: var(--color-border);
+  border-radius: $border-radius-full;
+  overflow: hidden;
+  
+  &__fill {
+    height: 100%;
+    background: var(--gradient-primary);
+    border-radius: $border-radius-full;
+    transition: width $transition-slow ease-out;
+    
+    &--animated {
+      animation: progressFill 1s ease-out;
+    }
+  }
+  
+  &--sm {
+    height: 4px;
+  }
+  
+  &--md {
+    height: 8px;
+  }
+  
+  &--lg {
+    height: 12px;
+  }
+  
+  &__container {
+    position: relative;
+    
+    &--with-label {
+      @include flex-between;
+      align-items: center;
+      gap: $spacing-sm;
+    }
+  }
+  
+  &__label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--color-text);
+    min-width: 60px;
+    text-align: right;
+  }
+  
+  &__percentage {
+    font-size: $font-size-xs;
+    color: var(--color-text-muted);
+    margin-top: $spacing-xs;
+  }
+}
+
+@keyframes progressFill {
+  from {
+    width: 0%;
+  }
+}
+
+// Modal Base
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  @include flex-center;
+  z-index: $z-modal;
+  padding: $spacing-md;
+  
+  &__content {
+    background-color: var(--color-surface);
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-xl;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    
+    &--sm {
+      width: 400px;
+    }
+    
+    &--md {
+      width: 600px;
+    }
+    
+    &--lg {
+      width: 800px;
+    }
+  }
+  
+  &__header {
+    padding: $spacing-lg;
+    border-bottom: 1px solid var(--color-border);
+    @include flex-between;
+  }
+  
+  &__title {
+    margin: 0;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+  }
+  
+  &__close {
+    background: none;
+    border: none;
+    font-size: $font-size-lg;
+    cursor: pointer;
+    padding: $spacing-xs;
+    border-radius: $border-radius-sm;
+    transition: all $transition-fast;
+    
+    &:hover {
+      background-color: var(--color-hover);
+    }
+  }
+  
+  &__body {
+    padding: $spacing-lg;
+  }
+  
+  &__footer {
+    padding: $spacing-lg;
+    border-top: 1px solid var(--color-border);
+    @include flex-end;
+    gap: $spacing-md;
+  }
+}
+
+// Task Block Base
+.task-block {
+  @extend .card;
+  margin-bottom: $spacing-md;
+  
+  &__header {
+    @include flex-between;
+    margin-bottom: $spacing-md;
+  }
+  
+  &__title {
+    font-weight: $font-weight-semibold;
+    color: var(--color-text);
+    margin: 0;
+  }
+  
+  &__status {
+    @include flex-center;
+    gap: $spacing-xs;
+    
+    &--completed {
+      color: var(--color-success);
+    }
+    
+    &--locked {
+      color: var(--color-text-muted);
+      opacity: 0.5;
+    }
+  }
+  
+  &__content {
+    margin-top: $spacing-md;
+  }
+  
+  &__subtasks {
+    margin-top: $spacing-md;
+    padding-left: $spacing-lg;
+  }
+  
+  &__subtask {
+    @include flex-start;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-sm;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  &__checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--color-border);
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+    transition: all $transition-fast;
+    
+    &:checked {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+    
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+  
+  &__subtask-title {
+    flex: 1;
+    font-size: $font-size-sm;
+    
+    &--completed {
+      text-decoration: line-through;
+      color: var(--color-text-muted);
+    }
+  }
+}
+
+// Reward Animation Base
+.reward-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  @include flex-center;
+  z-index: $z-modal;
+  pointer-events: none;
+  
+  &__content {
+    background: var(--gradient-primary);
+    color: var(--color-text);
+    padding: $spacing-lg $spacing-xl;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-xl;
+    text-align: center;
+    @include fade-in;
+    @include bounce;
+  }
+  
+  &__message {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-sm;
+  }
+  
+  &__icon {
+    font-size: $font-size-3xl;
+    margin-bottom: $spacing-md;
+    @include pulse;
+  }
+  
+  &__confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    animation: confettiFall 3s ease-out forwards;
+    
+    &:nth-child(odd) {
+      background: var(--color-secondary);
+    }
+    
+    &:nth-child(3n) {
+      background: var(--color-accent);
+    }
+  }
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+// Animations
+@keyframes completed-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  }
+} 
